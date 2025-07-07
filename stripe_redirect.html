@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Stripe Redirect</title>
+    <script src="https://js.stripe.com/v3/"></script>
+  </head>
+  <body>
+    <p>Redirecting to payment...</p>
+    <script>
+      // Get sessionId and publishableKey from query string
+      const urlParams = new URLSearchParams(window.location.search);
+      const sessionId = urlParams.get('sessionId');
+      const publishableKey = urlParams.get('publishableKey');
+      if (sessionId && publishableKey) {
+        var stripe = Stripe(publishableKey);
+        stripe.redirectToCheckout({ sessionId: sessionId });
+      } else {
+        document.body.innerHTML = 'Missing sessionId or publishableKey!';
+      }
+    </script>
+  </body>
+</html>
